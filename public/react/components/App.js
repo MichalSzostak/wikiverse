@@ -26,7 +26,7 @@ export const App = () => {
 		<main>	
       <h1>WikiVerse</h1>
 			<h2>An interesting 📚</h2>
-			<PagesList pages={pages} />
+			<PagesList pages={pages} apiURL={`${apiURL}`}/>
 		</main>
 	)
 }
