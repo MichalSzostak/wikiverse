@@ -1,11 +1,20 @@
 import React from 'react';
-import { Page } from './Page';
+import Button from 'react-bootstrap/Button';
 
-export const PagesList = ({pages}) => {
+
+
+
+export const PagesList = ({pages, setState, setPage}) => {
+	
+	function startReader(index) {
+		setState('reader');
+		setPage(pages[index])
+  	}
+
 	return <>
 		{
-			pages.map((page, idx) => {
-				return <Page page={page} key={idx} />
+			pages.map((page, index) => {
+				return <Button variant="outline-secondary" onClick={() => startReader(index)}>{page.title}</Button>
 			})
 		}
 	</>

@@ -9,11 +9,6 @@ main {
   height: 100vh;
 }
 
-.list-group-item{
-  background-color: rgb(223, 223, 223);
-}
-
-.card {
-  margin: 32px;
-  background-color: red;
+.btn-outline-secondary {
+  margin: 16px;
 }
