@@ -11,6 +11,8 @@ export const PagesList = ({pages, setState, setPage}) => {
 		setPage(pages[index])
   	}
 
+	
+
 	return <>
 		{
 			pages.map((page, index) => {
