@@ -20,7 +20,7 @@ export const App = () => {
 	const [pages, setPages] = useState([]);
 	const [state, setState] = useState('default');
 	const [page, setPage] = useState(null);
-
+	
 
 	// MOCK LOGIN, TO BE REPLACED WITH REAL LOGIN IN PRODUCTION
 
@@ -64,21 +64,38 @@ export const App = () => {
 		case 'default':
 			view = (
 				<div className="pages-list">
-					<PagesList pages={pages} setState={setState} setPage={setPage} fetchPages={fetchPages}/>
+					<PagesList 
+						pages={pages} 
+						setState={setState} 
+						setPage={setPage} 
+						fetchPages={fetchPages}
+					/>
 				</div>
 			);
 			break;
 		case 'reader':
 			view = (
 				<div className="reader">
-					<Reader user={user} page={page} setState={setState} fetchPages={fetchPages}/>
+					<Reader 
+						user={user} 
+						page={page} 
+						setState={setState} 
+						fetchPages={fetchPages}
+					/>
 				</div>
 			);
 			break;
 		case 'writer':
 			view = (
 				<div className="writer">
-					<Writer setState={setState} user={user} pages={pages} setPages={setPages} setPage={setPage}  fetchPages={fetchPages}/>
+					<Writer 
+						setState={setState} 
+						user={user} 
+						pages={pages} 
+						setPages={setPages} 
+						setPage={setPage}  
+						fetchPages={fetchPages}
+						/>
 				</div>
 			);
 			break;

@@ -20,12 +20,6 @@ export const Writer = ({setState, user, pages, setPages, setPage, fetchPages}) =
 
 
 
-    const handleContentChange = (e) => {
-        const { value } = e.target;
-        // Replace all newline characters with HTML line breaks
-        const newValue = value.replaceAll('\n', '<br />');
-        setContent(newValue);
-    };
 
     const handleTagsChange = (e) => {
         const { value } = e.target;
@@ -93,7 +87,7 @@ export const Writer = ({setState, user, pages, setPages, setPage, fetchPages}) =
                     e.target.style.height = '0px';
                     e.target.style.height = `${e.target.scrollHeight}px`;
                 }}
-                onInput={handleContentChange}
+                onChange={(e)=>{setContent(e.target.value)}}
             />
             </FloatingLabel>
             

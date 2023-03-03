@@ -57,7 +57,7 @@ export const Reader = ({page, user, setState, fetchPages}) => {
   }
 
   const handleEdit = async () => {
-
+      
       setState('editor');
 
   }
@@ -73,7 +73,9 @@ export const Reader = ({page, user, setState, fetchPages}) => {
             <small>Published: {new Date(page.createdAt).toLocaleDateString()}</small><br></br>
             <small>Last Edited: {new Date(page.createdAt).toLocaleDateString()}</small><hr></hr>
 
-            <div dangerouslySetInnerHTML={{ __html: page?.content.replace(/\n/g, '<br/>') }} /><hr></hr>
+            {page.content && (
+              <div dangerouslySetInnerHTML={{__html: page.content}} />
+            )}<hr></hr>
             <p>Tags: #{tags && tags.map(tag => tag.name).join(', #')}</p>
     </>)
 } 

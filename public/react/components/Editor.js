@@ -15,22 +15,18 @@ export const Editor = ({setState, user, pages, setPages, setPage, fetchPages, pa
     const [content, setContent] = useState(page.content);
     const [tagsToggle, setTagsToggle] = useState(false);
     const [author, setAuthor] = React.useState(null);
-    const [tags, setTags] = React.useState(null);
+    const [tags, setTags] = React.useState('');
 
-    console.log('title: ' + title + ' content: ' + content + ' tags: ' + tags);
+    console.log('title: ' + title + ' content: ' + content + ' tags: ' + tags + ' page: ' + page);
 
     async function fetchData(){
 		try {
 			const response = await fetch(`${apiURL}/wiki/${page.slug}`);
 			const data = await response.json();
-            console.log('data' +  data)
 			setAuthor(data.author.name);
-            setTags(data.tags)
-            console.log('author' +  author)
-            console.log('tags' +  author)
-            console.log('data' +  data)
-            {tags && setTagsToggle(true)}
-		} catch (err) {
+            setTags(data.tags.map(tag => tag.name).join(' '))
+            setTagsToggle(data.tags ? true : false);
+        	} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
 	}
@@ -44,38 +40,35 @@ export const Editor = ({setState, user, pages, setPages, setPage, fetchPages, pa
       setContent(page.content);
   }, [])
 
-    const handleContentChange = (e) => {
-        const { value } = e.target;
-        // Replace all newline characters with HTML line breaks
-        const newValue = value.replaceAll('\n', '<br />');
-        setContent(newValue);
-    };
 
     const handleTagsChange = (e) => {
         const { value } = e.target;
         // Ensure that the user only enters tags separated by spaces
         if (/^[a-zA-Z\s]*$/.test(value)) {
-          setTags(value);
+        setTags(value);
         }
-      };
+    };
 
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log('page: ' + page)
            const response = await fetch(`${apiURL}/wiki/${page.slug}`, {
               method: 'PUT',
               headers: {
                  'Content-Type': 'application/json'
               },
+              
               body: JSON.stringify({
-                 title: title,
-                 content: content,
-                 tags: tags.toLowerCase(),
-                 name : user.name,
-                 email : user.email
+                title: title,
+                content: content,
+                tags: tags,
+                name : user.name,
+                email : user.email
               })
            });
            const updatedPage = await response.json();
+           console.log('updated page: ' + updatedPage)
            // find the index of the updated page in the pages array
            const pageIndex = pages.findIndex(p => p.slug === updatedPage.slug);
            // replace the old page with the updated page
@@ -128,7 +121,7 @@ export const Editor = ({setState, user, pages, setPages, setPage, fetchPages, pa
                     e.target.style.height = '0px';
                     e.target.style.height = `${e.target.scrollHeight}px`;
                 }}
-                onInput={handleContentChange}
+                onChange={(e)=>{setContent(e.target.value)}}
                 value={content}
             />
             </FloatingLabel>
@@ -150,7 +143,7 @@ export const Editor = ({setState, user, pages, setPages, setPage, fetchPages, pa
                 <Form.Control 
                     type="text" 
                     placeholder="Enter tags" 
-                    value={tags.map(tag => tag.name).join(' ')} 
+                    value={tags}
                     onChange={handleTagsChange} 
                 />
                 </FloatingLabel>
